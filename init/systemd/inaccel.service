@@ -1,0 +1,15 @@
+[Unit]
+Description=InAccel Service
+Documentation=https://docs.inaccel.com
+After=network-online.target
+Before=docker.service kubelet.service
+Wants=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/inacceld
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

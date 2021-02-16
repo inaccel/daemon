@@ -33,6 +33,12 @@ dockers:
   - inaccel/daemon:{{ .RawVersion }}
 nfpms:
 - bindir: /usr/bin
+  contents:
+  - dst: /etc/systemd/system/inaccel.service.d/override.conf
+    src: configs/systemd/override.conf
+    type: config|noreplace
+  - dst: /etc/systemd/system/inaccel.service
+    src: init/systemd/inaccel.service
   description: InAccel is a product for you to build, ship and run hardware accelerated applications
   formats:
   - deb

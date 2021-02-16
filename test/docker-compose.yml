@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  example:
+    image: inaccel/jupyter:lab
+    ports:
+    - 8888
+    volumes:
+    - inaccel:/var/lib/inaccel
+volumes:
+  inaccel:
+    driver: inaccel

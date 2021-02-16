@@ -1,0 +1,51 @@
+project_name: inaccel
+
+before:
+  hooks:
+  - go mod download
+builds:
+- binary: inacceld
+  goarch:
+  - amd64
+  goos:
+  - linux
+  main: cmd/main.go
+
+archives:
+- files:
+  - none*
+  name_template: "{{ .Os }}-{{ .Arch }}"
+checksum:
+  name_template: checksums.txt
+dockers:
+- build_flag_templates:
+  - "--label=org.opencontainers.image.authors=InAccel <info@inaccel.com>"
+  - "--label=org.opencontainers.image.created={{ .Date }}"
+  - "--label=org.opencontainers.image.description=InAccel is a product for you to build, ship and run hardware accelerated applications"
+  - "--label=org.opencontainers.image.liscenses=Apache-2.0"
+  - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+  - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+  - "--label=org.opencontainers.image.url=https://inaccel.com"
+  - "--label=org.opencontainers.image.vendor=InAccel"
+  - "--label=org.opencontainers.image.version={{ .RawVersion }}"
+  image_templates:
+  - inaccel/daemon:latest
+  - inaccel/daemon:{{ .RawVersion }}
+nfpms:
+- bindir: /usr/bin
+  description: InAccel is a product for you to build, ship and run hardware accelerated applications
+  formats:
+  - deb
+  - rpm
+  homepage: https://inaccel.com
+  license: Apache-2.0
+  maintainer: InAccel <info@inaccel.com>
+  overrides:
+    deb:
+      file_name_template: "{{ .ProjectName }}_{{ .RawVersion }}_{{ .Arch }}"
+    rpm:
+      file_name_template: "{{ .ProjectName }}-{{ .RawVersion }}-{{ .Release }}.{{ .Arch }}"
+      replacements:
+        amd64: x86_64
+  release: 1
+  vendor: InAccel

@@ -50,8 +50,7 @@ nfpms:
     deb:
       file_name_template: "{{ .ProjectName }}_{{ .RawVersion }}_{{ .Arch }}"
     rpm:
-      file_name_template: "{{ .ProjectName }}-{{ .RawVersion }}-{{ .Release }}.{{ .Arch }}"
+      file_name_template: "{{ .ProjectName }}-{{ .RawVersion }}-1.{{ .Arch }}"
       replacements:
         amd64: x86_64
-  release: 1
   vendor: InAccel

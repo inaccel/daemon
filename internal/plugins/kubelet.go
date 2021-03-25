@@ -2,7 +2,6 @@ package plugins
 
 import (
 	"context"
-	"net"
 	"os"
 
 	"github.com/container-storage-interface/spec/lib/go/csi"
@@ -11,7 +10,6 @@ import (
 	"github.com/inaccel/daemon/pkg/plugin"
 	"github.com/moby/sys/mount"
 	"github.com/sirupsen/logrus"
-	"golang.org/x/sys/unix"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -35,8 +33,7 @@ func NewKubelet(ctx context.Context, driver driver.Driver) plugin.Plugin {
 	kubelet.driver = driver
 
 	kubelet.Plugin = plugin.Base(func() {
-		unix.Unlink(kubelet.path)
-		if listener, err := net.Listen("unix", kubelet.path); err == nil {
+		if listener, err := listen(kubelet.path); err == nil {
 			go func() {
 				<-ctx.Done()
 
@@ -50,7 +47,7 @@ func NewKubelet(ctx context.Context, driver driver.Driver) plugin.Plugin {
 
 			server.Serve(listener)
 		} else {
-			logrus.Warn(err)
+			logrus.Error(err)
 		}
 	}, cancel)
 

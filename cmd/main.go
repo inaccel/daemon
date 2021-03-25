@@ -8,6 +8,7 @@ import (
 	"github.com/inaccel/daemon/internal/driver"
 	"github.com/inaccel/daemon/internal/plugins"
 	"github.com/inaccel/daemon/pkg"
+	"github.com/inaccel/daemon/pkg/env"
 	"github.com/inaccel/daemon/pkg/plugin"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
@@ -64,12 +65,12 @@ func main() {
 			}
 
 			var new []plugin.New
-			if os.Getenv("DOCKER") != "disabled" {
+			if !env.Disabled("DOCKER") {
 				new = append(new, func() plugin.Plugin {
 					return plugins.NewDocker(context.Context, inaccel)
 				})
 			}
-			if os.Getenv("KUBELET") != "disabled" {
+			if !env.Disabled("KUBELET") {
 				new = append(new, func() plugin.Plugin {
 					return plugins.NewKubelet(context.Context, inaccel)
 				})

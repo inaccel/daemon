@@ -2,14 +2,12 @@ package plugins
 
 import (
 	"context"
-	"net"
 	"strings"
 
 	"github.com/docker/go-plugins-helpers/volume"
 	"github.com/inaccel/daemon/internal/driver"
 	"github.com/inaccel/daemon/pkg/plugin"
 	"github.com/sirupsen/logrus"
-	"golang.org/x/sys/unix"
 )
 
 type Docker struct {
@@ -29,8 +27,7 @@ func NewDocker(ctx context.Context, driver driver.Driver) plugin.Plugin {
 	docker.driver = driver
 
 	docker.Plugin = plugin.Base(func() {
-		unix.Unlink(docker.path)
-		if listener, err := net.Listen("unix", docker.path); err == nil {
+		if listener, err := listen(docker.path); err == nil {
 			go func() {
 				<-ctx.Done()
 
@@ -41,7 +38,7 @@ func NewDocker(ctx context.Context, driver driver.Driver) plugin.Plugin {
 
 			server.Serve(listener)
 		} else {
-			logrus.Warn(err)
+			logrus.Error(err)
 		}
 	}, cancel)
 

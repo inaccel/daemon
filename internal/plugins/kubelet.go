@@ -99,6 +99,10 @@ func (plugin Kubelet) NodePublishVolume(ctx context.Context, request *csi.NodePu
 	}
 
 	if !graphdriver.NewDefaultChecker().IsMounted(request.TargetPath) {
+		if err := os.MkdirAll(request.TargetPath, os.ModePerm); err != nil {
+			return nil, err
+		}
+
 		if err := mount.Mount(mountpoint, request.TargetPath, "none", "rbind"); err != nil {
 			return nil, err
 		}
@@ -114,6 +118,10 @@ func (plugin Kubelet) NodeUnpublishVolume(ctx context.Context, request *csi.Node
 
 	if graphdriver.NewDefaultChecker().IsMounted(request.TargetPath) {
 		if err := mount.Unmount(request.TargetPath); err != nil {
+			return nil, err
+		}
+
+		if err := os.RemoveAll(request.TargetPath); err != nil {
 			return nil, err
 		}
 	}

@@ -99,7 +99,7 @@ func (plugin Kubelet) NodePublishVolume(ctx context.Context, request *csi.NodePu
 	}
 
 	if !graphdriver.NewDefaultChecker().IsMounted(request.TargetPath) {
-		if err := mount.Mount(mountpoint, request.TargetPath, "none", "bind"); err != nil {
+		if err := mount.Mount(mountpoint, request.TargetPath, "none", "rbind"); err != nil {
 			return nil, err
 		}
 	}

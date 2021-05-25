@@ -79,7 +79,7 @@ func (plugin Docker) Get(request *volume.GetRequest) (*volume.GetResponse, error
 		response.Volume = &volume.Volume{
 			Name: request.Name,
 			Status: map[string]interface{}{
-				"version": plugin.driver.Version(),
+				"InAccelVersion": plugin.driver.Version(),
 			},
 		}
 	} else {
@@ -97,7 +97,7 @@ func (plugin Docker) Get(request *volume.GetRequest) (*volume.GetResponse, error
 			Name:       request.Name,
 			Mountpoint: mountpoint,
 			Status: map[string]interface{}{
-				"version": plugin.driver.Version(),
+				"InAccelVersion": plugin.driver.Version(),
 			},
 		}
 	}
@@ -120,7 +120,7 @@ func (plugin Docker) List() (*volume.ListResponse, error) {
 			Name:       name,
 			Mountpoint: mountpoint,
 			Status: map[string]interface{}{
-				"version": plugin.driver.Version(),
+				"InAccelVersion": plugin.driver.Version(),
 			},
 		})
 	}

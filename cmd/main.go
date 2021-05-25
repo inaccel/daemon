@@ -32,6 +32,10 @@ func main() {
 				Aliases: []string{"d"},
 				Usage:   "enable debug output",
 			},
+			&cli.StringFlag{
+				Name:  "root",
+				Usage: "inacceld root directory",
+			},
 		},
 		Before: func(context *cli.Context) error {
 			log.SetOutput(ioutil.Discard)
@@ -53,6 +57,10 @@ func main() {
 				}
 
 				logrus.Warn(err)
+			}
+
+			if context.IsSet("root") {
+				config.Root = context.String("root")
 			}
 
 			if err := config.Validate(); err != nil {
@@ -101,6 +109,10 @@ func main() {
 							}
 
 							logrus.Warn(err)
+						}
+
+						if context.IsSet("root") {
+							config.Root = context.String("root")
 						}
 					}
 

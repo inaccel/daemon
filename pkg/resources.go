@@ -30,18 +30,20 @@ func (resources Resources) Create(root, name string) (string, error) {
 
 	if err := os.MkdirAll(namespace, 0700); err != nil {
 		return "", err
-	} else if err = os.Chmod(root, 0755); err != nil {
+	}
+
+	if err := os.Chmod(root, 0755); err != nil {
 		return "", err
 	}
 
-	if err := os.Mkdir(mountpoint, 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(mountpoint, 0755); err != nil {
 		return "", err
 	}
 
 	for id, resource := range resources {
 		path := filepath.Join(mountpoint, id)
 
-		if err := os.Mkdir(path, os.ModePerm); err != nil && !os.IsExist(err) {
+		if err := os.MkdirAll(path, os.ModePerm); err != nil {
 			return "", err
 		}
 

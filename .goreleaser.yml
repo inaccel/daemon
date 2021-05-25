@@ -5,6 +5,8 @@ before:
   - go mod download
 builds:
 - binary: inacceld
+  env:
+  - CGO_ENABLED=0
   goarch:
   - amd64
   goos:
@@ -14,6 +16,7 @@ builds:
 archives:
 - files:
   - none*
+  id: archive
   name_template: "{{ .Os }}-{{ .Arch }}"
 checksum:
   name_template: checksums.txt

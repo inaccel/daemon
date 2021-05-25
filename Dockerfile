@@ -1,3 +1,3 @@
-FROM gcr.io/distroless/base
+FROM scratch
 COPY inacceld /bin/inacceld
 ENTRYPOINT ["inacceld"]

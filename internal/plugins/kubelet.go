@@ -58,9 +58,8 @@ func (plugin Kubelet) GetInfo(ctx context.Context, request *pluginregistration.I
 	logrus.Info("Kubelet/GetInfo")
 
 	response := &pluginregistration.PluginInfo{
-		Type:     pluginregistration.CSIPlugin,
-		Name:     "inaccel",
-		Endpoint: plugin.path,
+		Type: pluginregistration.CSIPlugin,
+		Name: "inaccel",
 		SupportedVersions: []string{
 			"v1.3.0",
 		},

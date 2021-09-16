@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/docker/docker/daemon/graphdriver"
 	"github.com/inaccel/daemon/pkg/tmpfs"
 )
 
@@ -24,19 +25,12 @@ func (resources Resources) magic() string {
 	return "_" + strings.ToLower(reflect.TypeOf(resources).Name())
 }
 
-func (resources Resources) Create(root, name string) (string, error) {
-	namespace := filepath.Join(root, "."+name)
+func (resources Resources) create(namespace string) (string, error) {
 	mountpoint := filepath.Join(namespace, resources.magic())
 
-	if err := os.MkdirAll(namespace, 0700); err != nil {
-		return "", err
-	}
-
-	if err := os.Chmod(root, 0755); err != nil {
-		return "", err
-	}
-
 	if err := os.MkdirAll(mountpoint, 0755); err != nil {
+		return "", err
+	} else if err = os.Chmod(mountpoint, 0755); err != nil {
 		return "", err
 	}
 
@@ -70,12 +64,48 @@ func (resources Resources) Create(root, name string) (string, error) {
 	return mountpoint, nil
 }
 
-func (resources Resources) Get(root string, name string) (string, error) {
-	if _, err := os.Stat(filepath.Join(root, "."+name, resources.magic())); err != nil {
+func (resources Resources) Create(root, name string) (string, error) {
+	if !graphdriver.NewDefaultChecker().IsMounted(root) {
+		if err := os.Mkdir(root, 0755); err != nil && !os.IsExist(err) && !os.IsNotExist(err) {
+			return "", err
+		} else if err = os.Chmod(root, 0755); err != nil {
+			return "", err
+		}
+	}
+
+	if name != "" {
+		namespace := filepath.Join(root, "."+name)
+
+		if err := os.MkdirAll(namespace, 0700); err != nil {
+			return "", err
+		} else if err = os.Chmod(namespace, 0700); err != nil {
+			return "", err
+		}
+
+		return resources.create(namespace)
+	}
+
+	return resources.create(root)
+}
+
+func (resources Resources) get(namespace string) (string, error) {
+	mountpoint := filepath.Join(namespace, resources.magic())
+
+	if _, err := os.Stat(mountpoint); err != nil {
 		return "", err
 	}
 
-	return resources.Create(root, name)
+	return resources.create(namespace)
+}
+
+func (resources Resources) Get(root string, name string) (string, error) {
+	if name != "" {
+		namespace := filepath.Join(root, "."+name)
+
+		return resources.get(namespace)
+	}
+
+	return resources.get(root)
 }
 
 func (resources Resources) List(root string) (map[string]string, error) {
@@ -97,21 +127,54 @@ func (resources Resources) List(root string) (map[string]string, error) {
 	return names, nil
 }
 
-func (resources Resources) Release(root, name string) error {
-	namespace := filepath.Join(root, "."+name)
+func (resources Resources) release(namespace string) error {
 	mountpoint := filepath.Join(namespace, resources.magic())
 
 	for id, resource := range resources {
 		path := filepath.Join(mountpoint, id)
+
+		if err := os.Remove(filepath.Join(namespace, id)); err != nil && !os.IsNotExist(err) {
+			return err
+		}
 
 		if resource.Tmpfs {
 			if err := tmpfs.Unmount(path); err != nil {
 				return err
 			}
 		}
+
+		if err := os.RemoveAll(path); err != nil {
+			return err
+		}
 	}
 
-	return os.RemoveAll(namespace)
+	return os.RemoveAll(mountpoint)
+}
+
+func (resources Resources) Release(root, name string) error {
+	if name != "" {
+		namespace := filepath.Join(root, "."+name)
+
+		if err := resources.release(namespace); err != nil {
+			return err
+		}
+
+		if err := os.RemoveAll(namespace); err != nil {
+			return err
+		}
+	} else {
+		if err := resources.release(root); err != nil {
+			return err
+		}
+	}
+
+	if !graphdriver.NewDefaultChecker().IsMounted(root) {
+		if err := os.Remove(root); err != nil && !os.IsExist(err) && !os.IsNotExist(err) {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (resources Resources) UnmarshalJSON(data []byte) error {

@@ -60,6 +60,10 @@ func (plugin Docker) Capabilities() *volume.CapabilitiesResponse {
 func (plugin Docker) Create(request *volume.CreateRequest) error {
 	logrus.Info("Docker/Create")
 
+	if strings.EqualFold(request.Name, "inaccel") {
+		return nil
+	}
+
 	var name string
 	if !strings.EqualFold(request.Name, "host") {
 		name = request.Name
@@ -181,6 +185,10 @@ func (plugin Docker) Path(request *volume.PathRequest) (*volume.PathResponse, er
 
 func (plugin Docker) Remove(request *volume.RemoveRequest) error {
 	logrus.Info("Docker/Remove")
+
+	if strings.EqualFold(request.Name, "inaccel") {
+		return nil
+	}
 
 	var name string
 	if !strings.EqualFold(request.Name, "host") {

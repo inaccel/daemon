@@ -27,6 +27,7 @@ dockers:
   - "--label=org.opencontainers.image.description=InAccel is a product for you to build, ship and run hardware accelerated applications"
   - "--label=org.opencontainers.image.liscenses=Apache-2.0"
   - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+  - "--label=org.opencontainers.image.source={{ .GitURL }}"
   - "--label=org.opencontainers.image.title={{ .ProjectName }}"
   - "--label=org.opencontainers.image.url=https://inaccel.com"
   - "--label=org.opencontainers.image.vendor=InAccel"

@@ -5,22 +5,22 @@ go 1.17
 require (
 	github.com/container-storage-interface/spec v1.3.0
 	github.com/docker/docker v20.10.12+incompatible
-	github.com/docker/go-plugins-helpers v0.0.0-20210623094020-7ef169fb8b8e
-	github.com/go-playground/validator/v10 v10.9.0
+	github.com/docker/go-plugins-helpers v0.0.0-20211224144127-6eecb7beb651
+	github.com/go-playground/validator/v10 v10.10.0
 	github.com/moby/sys/mount v0.3.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/urfave/cli/v2 v2.3.0
-	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e
-	google.golang.org/grpc v1.43.0
-	k8s.io/kubelet v0.23.1
+	golang.org/x/sys v0.0.0-20220204135822-1c1b9b1eba6a
+	google.golang.org/grpc v1.44.0
+	k8s.io/kubelet v0.23.3
 )
 
 require (
 	github.com/Microsoft/go-winio v0.5.1 // indirect
-	github.com/Microsoft/hcsshim v0.9.1 // indirect
+	github.com/Microsoft/hcsshim v0.9.2 // indirect
 	github.com/containerd/cgroups v1.0.1 // indirect
-	github.com/containerd/containerd v1.5.8 // indirect
-	github.com/containerd/continuity v0.2.1 // indirect
+	github.com/containerd/containerd v1.5.9 // indirect
+	github.com/containerd/continuity v0.2.2 // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect

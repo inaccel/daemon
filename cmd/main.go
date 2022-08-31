@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 
@@ -38,7 +38,7 @@ func main() {
 			},
 		},
 		Before: func(context *cli.Context) error {
-			log.SetOutput(ioutil.Discard)
+			log.SetOutput(io.Discard)
 
 			logrus.SetFormatter(new(logrus.JSONFormatter))
 

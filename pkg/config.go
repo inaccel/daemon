@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 
 	"github.com/go-playground/validator/v10"
@@ -33,7 +32,7 @@ func NewConfig() Config {
 }
 
 func (config *Config) Read(filename string) error {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
@@ -55,7 +54,7 @@ func (config Config) Write(filename string, perm os.FileMode) error {
 		return err
 	}
 
-	if err := ioutil.WriteFile(filename, data, perm); err != nil {
+	if err := os.WriteFile(filename, data, perm); err != nil {
 		return err
 	}
 

@@ -3,23 +3,23 @@ module github.com/inaccel/daemon
 go 1.19
 
 require (
-	github.com/container-storage-interface/spec v1.3.0
-	github.com/docker/docker v20.10.20+incompatible
+	github.com/container-storage-interface/spec v1.7.0
+	github.com/docker/docker v20.10.22+incompatible
 	github.com/docker/go-plugins-helpers v0.0.0-20211224144127-6eecb7beb651
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/moby/sys/mount v0.3.3
 	github.com/sirupsen/logrus v1.9.0
-	github.com/urfave/cli/v2 v2.20.2
-	golang.org/x/sys v0.1.0
-	google.golang.org/grpc v1.50.1
-	k8s.io/kubelet v0.25.3
+	github.com/urfave/cli/v2 v2.23.7
+	golang.org/x/sys v0.4.0
+	google.golang.org/grpc v1.52.0
+	k8s.io/kubelet v0.26.0
 )
 
 require (
 	github.com/Microsoft/go-winio v0.6.0 // indirect
-	github.com/Microsoft/hcsshim v0.9.4 // indirect
-	github.com/containerd/cgroups v1.0.3 // indirect
-	github.com/containerd/containerd v1.6.8 // indirect
+	github.com/Microsoft/hcsshim v0.9.6 // indirect
+	github.com/containerd/cgroups v1.0.4 // indirect
+	github.com/containerd/containerd v1.6.15 // indirect
 	github.com/containerd/continuity v0.3.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect
@@ -45,13 +45,13 @@ require (
 	github.com/vbatts/tar-split v0.11.2 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
+	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
-	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/net v0.4.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
 	golang.org/x/tools v0.1.12 // indirect
-	google.golang.org/genproto v0.0.0-20220502173005-c8bf987b8c21 // indirect
-	google.golang.org/protobuf v1.28.0 // indirect
+	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect
+	google.golang.org/protobuf v1.28.1 // indirect
 	gotest.tools/v3 v3.4.0 // indirect
 )
 

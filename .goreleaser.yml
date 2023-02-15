@@ -61,3 +61,8 @@ nfpms:
       replacements:
         amd64: x86_64
   vendor: InAccel
+release:
+  footer: |
+    ## Docker images
+
+    - `docker pull inaccel/daemon:{{ .RawVersion }}`

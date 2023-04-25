@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"k8s.io/kubelet/pkg/apis/pluginregistration/v1"
+	pluginregistrationv1 "k8s.io/kubelet/pkg/apis/pluginregistration/v1"
 )
 
 type Kubelet struct {
@@ -43,7 +43,7 @@ func NewKubelet(ctx context.Context, driver driver.Driver) plugin.Plugin {
 			server := grpc.NewServer()
 			csi.RegisterIdentityServer(server, kubelet)
 			csi.RegisterNodeServer(server, kubelet)
-			pluginregistration.RegisterRegistrationServer(server, kubelet)
+			pluginregistrationv1.RegisterRegistrationServer(server, kubelet)
 
 			server.Serve(listener)
 		} else {
@@ -54,11 +54,11 @@ func NewKubelet(ctx context.Context, driver driver.Driver) plugin.Plugin {
 	return kubelet
 }
 
-func (plugin Kubelet) GetInfo(ctx context.Context, request *pluginregistration.InfoRequest) (*pluginregistration.PluginInfo, error) {
+func (plugin Kubelet) GetInfo(ctx context.Context, request *pluginregistrationv1.InfoRequest) (*pluginregistrationv1.PluginInfo, error) {
 	logrus.Info("Kubelet/GetInfo")
 
-	response := &pluginregistration.PluginInfo{
-		Type: pluginregistration.CSIPlugin,
+	response := &pluginregistrationv1.PluginInfo{
+		Type: pluginregistrationv1.CSIPlugin,
 		Name: "inaccel",
 		SupportedVersions: []string{
 			"v1.3.0",
@@ -183,10 +183,10 @@ func (plugin Kubelet) NodeUnstageVolume(ctx context.Context, request *csi.NodeUn
 	return nil, status.Error(codes.Unimplemented, "")
 }
 
-func (plugin Kubelet) NotifyRegistrationStatus(ctx context.Context, request *pluginregistration.RegistrationStatus) (*pluginregistration.RegistrationStatusResponse, error) {
+func (plugin Kubelet) NotifyRegistrationStatus(ctx context.Context, request *pluginregistrationv1.RegistrationStatus) (*pluginregistrationv1.RegistrationStatusResponse, error) {
 	logrus.Info("Kubelet/NotifyRegistrationStatus")
 
-	response := &pluginregistration.RegistrationStatusResponse{}
+	response := &pluginregistrationv1.RegistrationStatusResponse{}
 
 	if !request.PluginRegistered {
 		logrus.Error(request.Error)

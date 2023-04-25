@@ -3,20 +3,20 @@ module github.com/inaccel/daemon
 go 1.19
 
 require (
-	github.com/container-storage-interface/spec v1.3.0
-	github.com/docker/docker v23.0.2+incompatible
+	github.com/container-storage-interface/spec v1.8.0
+	github.com/docker/docker v23.0.4+incompatible
 	github.com/docker/go-plugins-helpers v0.0.0-20211224144127-6eecb7beb651
 	github.com/go-playground/validator/v10 v10.12.0
 	github.com/moby/sys/mount v0.3.3
 	github.com/sirupsen/logrus v1.9.0
 	github.com/urfave/cli/v2 v2.25.1
-	golang.org/x/sys v0.6.0
+	golang.org/x/sys v0.7.0
 	google.golang.org/grpc v1.54.0
-	k8s.io/kubelet v0.26.3
+	k8s.io/kubelet v0.27.1
 )
 
 require (
-	github.com/Microsoft/go-winio v0.6.0 // indirect
+	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/containerd/containerd v1.7.0 // indirect
 	github.com/containerd/continuity v0.3.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
@@ -27,7 +27,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/klauspost/compress v1.16.3 // indirect
+	github.com/klauspost/compress v1.16.5 // indirect
 	github.com/leodido/go-urn v1.2.2 // indirect
 	github.com/moby/patternmatcher v0.5.0 // indirect
 	github.com/moby/sys/mountinfo v0.6.2 // indirect
@@ -35,7 +35,7 @@ require (
 	github.com/moby/sys/symlink v0.2.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.0-rc2.0.20221005185240-3a7f492d3f1b // indirect
-	github.com/opencontainers/runc v1.1.5 // indirect
+	github.com/opencontainers/runc v1.1.6 // indirect
 	github.com/opencontainers/runtime-spec v1.1.0-rc.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rootless-containers/rootlesskit v1.1.0 // indirect

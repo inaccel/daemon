@@ -47,19 +47,13 @@ nfpms:
   - dst: /etc/systemd/system/inaccel.service
     src: init/systemd/inaccel.service
   description: InAccel is a product for you to build, ship and run hardware accelerated applications
+  file_name_template: "{{ .ConventionalFileName }}"
   formats:
   - deb
   - rpm
   homepage: https://inaccel.com
   license: Apache-2.0
   maintainer: InAccel <info@inaccel.com>
-  overrides:
-    deb:
-      file_name_template: "{{ .ProjectName }}_{{ .RawVersion }}_{{ .Arch }}"
-    rpm:
-      file_name_template: "{{ .ProjectName }}-{{ .RawVersion }}-1.{{ .Arch }}"
-      replacements:
-        amd64: x86_64
   vendor: InAccel
 release:
   footer: |
